@@ -13,6 +13,23 @@ export default SignUpScreen = ({ navigation }) => {
     const [email, onChangeEmail] = React.useState('');
     const [phone, onChangePhone] = React.useState('');
     const [grade, onChangeGrade] = React.useState('');
+    
+
+    const handleSignUp = () => {
+        if (
+            lastName.trim() &&
+            firstName.trim() &&
+            inputDate &&
+            email.trim() &&
+            phone.trim() &&
+            grade.trim()
+        ) {
+            navigation.navigate('Students')
+        }
+        else {
+            alert("Toutes les chapms sont obligatoires!")
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -65,6 +82,7 @@ export default SignUpScreen = ({ navigation }) => {
                             style={styles.input}
                             onChangeText={onChangePhone}
                             value={phone}
+                            keyboardType="numeric"
                         />
 
                         {/* --- Inssert grade --- */}
@@ -73,6 +91,7 @@ export default SignUpScreen = ({ navigation }) => {
                             style={styles.input}
                             onChangeText={onChangeGrade}
                             value={grade}
+                            keyboardType="numeric"
                         />
 
 
@@ -83,7 +102,7 @@ export default SignUpScreen = ({ navigation }) => {
             {/* --- Submit button --- */}
             <TouchableOpacity
                 style={styles.primaryBtn}
-                onPress={() => navigation.navigate('Students')}
+                onPress={handleSignUp}
             >
                 <Text style={styles.primaryTxt}>
                     Valider
