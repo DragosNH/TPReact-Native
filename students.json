@@ -1,0 +1,47 @@
+[
+    {
+        "id": 1,
+        "lastName": "Doe",
+        "firstName": "John",
+        "birthDate": "06/22/1998",
+        "email": "john@doe.com",
+        "phone": "0606060606",
+        "grade": "15"
+    },
+    {
+        "id": 2,
+        "lastName": "Cambodge",
+        "firstName": "George",
+        "birthDate": "08/05/1984",
+        "email": "george@cambodge.com",
+        "phone": "06605115",
+        "grade": "17"
+    },
+    {
+        "id": 3,
+        "lastName": "Paris",
+        "firstName": "Robert",
+        "birthDate": "02/12/1998",
+        "email": "bob@paris.com",
+        "phone": "06845601",
+        "grade": "20"
+    },
+    {
+        "id": 4,
+        "lastName": "Haribo",
+        "firstName": "Hugo",
+        "birthDate": "09/26/1997",
+        "email": "hugo@hari.com",
+        "phone": "06658004",
+        "grade": "19"
+    },
+    {
+        "id": 5,
+        "lastName": "Colonne",
+        "firstName": "John",
+        "birthDate": "10/12/2004",
+        "email": "hugo@hari.com",
+        "phone": "06658004",
+        "grade": "19"
+    }
+]
