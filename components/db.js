@@ -1,45 +1,45 @@
 import * as SQLite from 'expo-sqlite';
 
+
 export class StudentDatabase {
-  DB_NAME = 'studentList.db';
+  DB_NAME = 'studentDb.db';
 
-  DBInit = () => {
-    const db = SQLite.openDatabase('studentList.db');
-    db.transaction(tx => {
-      tx.executeSql(`
-        CREATE TABLE IF NOT EXISTS students (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        lastName TEXT NOT NULL,
-        firstName TEXT NOT NULL,
-        birthDate TEXT NOT NULL,
-        email TEXT NOT NULL,
-        phone INTEGER NOT NULL,
-        grade INTEGER NOT NULL
-    );`
+  DBInit = async () => {
+    const db = await SQLite.openDatabaseAsync(this.DB_NAME);
+    await db.execAsync(`
+        CREATE TABLE IF NOT EXISTS students
+            (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                lastName TEXT NOT NULL,
+                firstName TEXT NOT NULL,
+                birthDate TEXT NOT NULL,
+                email TEXT NOT NULL,
+                phone INTEGER NOT NULL,
+                grade INTEGER NOT NULL
+            );`);
+  }
+
+  addStudent = async (info) => {
+    try {
+      const db = await SQLite.openDatabaseAsync(this.DB_NAME);
+      await db.runAsync(
+        'INSERT INTO students (lastName, firstName, birthDate, email, phone, grade) VALUES (?, ?, ?, ?, ?, ?);',
+        [info.lastName, info.firstName, info.birthDate, info.email, info.phone, info.grade]
       );
-    });
+      return true;
+    } catch (e) {
+      console.error("Erreur lors de l'ajout d'etudient:", e);
+      return false;
+    }
   };
 
-  addStudents = (student) => {
-    return new Promise((resolve, reject) => {
-      const db = SQLite.openDatabase(this.DB_NAME);
-      db.transaction(tx => {
-        tx.executeSql(
-          'INSERT INTO students (lastName, firstName, birthDate, email, phone, grade) VALUES (?, ?, ?, ?, ?, ?);',
-          [student.lastName, student.firstName, student.birthDate, student.email, student.phone, student.grade],
-        );
-      });
-    });
-  };
-
-  getStudents = () => {
-    return new Promise((resolve, reject) => {
-      const db = SQLite.openDatabase(this.DB_NAME);
-      db.transaction(tx => {
-        tx.executeSql(
-          'SELECT * FROM students ORDER BY lastName;',
-        );
-      });
-    });
+  getStudent = async () => {
+    try {
+      const db = await SQLite.openDatabaseAsync(this.DB_NAME);
+      return await db.getAllAsync('SELECT * FROM students ORDER BY grade DESC;');
+    } catch (e) {
+      console.error("Erreur lors de la récupération des etudients:", e);
+      return [];
+    }
   };
 }

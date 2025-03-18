@@ -8,57 +8,59 @@ export default StudentsScreen = ({ navigation }) => {
 
     useEffect(() => {
         const loadStudents = async () => {
-            try{
+            try {
                 const db = new StudentDatabase();
-                const allStudents = await db.getStudents();
+                const allStudents = await db.getStudent();
                 setStudents(allStudents);
-            } catch (e){
+            } catch (e) {
                 console.error("Erreur lors du chargement: ", e);
             }
-            
+
         }
 
         loadStudents();
     }, []);
 
-    const renderStudents = ({item}) => {
-        <View style={styles.container}>
-            <Text style={styles.title}>Les étudiants</Text>
-            <View>
-                <Text>{item.lastName}</Text>
-                <Text>{item.firstName}</Text>
-                <Text>{item.grade}</Text>
+    const renderStudents = ({ item }) => {
+        const {lastName, firstName, grade } = item;
+
+        return (
+            <View style={styles.container}>
+                <Text style={styles.title}>Les étudiants</Text>
+                <View>
+                    <Text>{item.lastName}</Text>
+                    <Text>{item.firstName}</Text>
+                    <Text>{item.grade}</Text>
+                </View>
+                <TouchableOpacity
+                    style={styles.primaryBtn}
+                    onPress={() => navigation.navigate('Home')}
+                >
+                    <Text>Retour</Text>
+                </TouchableOpacity>
             </View>
-            <TouchableOpacity 
-                style={styles.primaryBtn}
-                onPress={() => navigation.navigate('Home')}
-            >
-                <Text>Retour</Text>
-            </TouchableOpacity>
-        </View>
+        )
+
     };
 
     return (
         <View style={styles.container}>
             <ScrollView>
-            <Text style={styles.title}>Les étudiants</Text>
-            <View>
-            {/* La ScrollView pour le scroll dans la liste des etudiants */}
-            <FlatList 
-                data={students}
-                renderItem={renderStudents}
-                keyExtractor={item => item.id.toString()}
-            />
-               
-
-
-            </View>
-            <TouchableOpacity 
-                style={styles.primaryBtn}
-                onPress={() => navigation.navigate('Home')}
-            >
-                <Text>Retour</Text>
-            </TouchableOpacity>
+                <Text style={styles.title}>Les étudiants</Text>
+                <View>
+                    {/* La ScrollView pour le scroll dans la liste des etudiants */}
+                    <FlatList
+                        data={students}
+                        renderItem={renderStudents}
+                        keyExtractor={item => item.id.toString()}
+                    />
+                </View>
+                <TouchableOpacity
+                    style={styles.primaryBtn}
+                    onPress={() => navigation.navigate('Home')}
+                >
+                    <Text>Retour</Text>
+                </TouchableOpacity>
             </ScrollView>
         </View>
     )

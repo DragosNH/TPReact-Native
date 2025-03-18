@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, TouchableOpacity, TextInput, ScrollView } from "react-native";
 import { signUpPage as styles } from "../style/signUpPage";
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { DatePickerInput } from 'react-native-paper-dates';
+import { StudentDatabase } from "../components/db";
 
 // Docummentation Date Picker https://web-ridge.github.io/react-native-paper-dates/docs/intro
 
 export default SignUpScreen = ({ navigation }) => {
+
     const [lastName, onChangeLastName] = React.useState('');
     const [firstName, onChangeFirstName] = React.useState('');
     const [inputDate, setInputDate] = React.useState(undefined)
     const [email, onChangeEmail] = React.useState('');
     const [phone, onChangePhone] = React.useState('');
     const [grade, onChangeGrade] = React.useState('');
-    
 
+    const [saveStudent, setSaveStudent] = React.useState(null);
+
+    // Pour valider toutes les champs
     const handleSignUp = () => {
         if (
             lastName.trim() &&
@@ -30,6 +34,29 @@ export default SignUpScreen = ({ navigation }) => {
             alert("Toutes les chapms sont obligatoires!")
         }
     }
+
+    useEffect(() => {
+        const saveStudent = async () => {
+            try {
+                const db = new StudentDatabase();
+                db.DBInit();
+
+                const student = {
+                    lastName: lastName,
+                    firstName: firstName,
+                    birthDate: inputDate,
+                    email: email,
+                    phone: phone,
+                    grade: grade
+                };
+                
+                await db.addStudents(student);
+                setSaveStudent(student);
+            } catch (e) {  
+                console.error("Erreur lors de l'enregistrement: ", e);
+            }
+        }
+    });
 
     return (
         <View style={styles.container}>
