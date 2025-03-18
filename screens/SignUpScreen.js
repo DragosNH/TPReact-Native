@@ -6,7 +6,7 @@ import { DatePickerInput } from 'react-native-paper-dates';
 
 // Docummentation Date Picker https://web-ridge.github.io/react-native-paper-dates/docs/intro
 
-export default SignUpScreen = () => {
+export default SignUpScreen = ({ navigation }) => {
     const [lastName, onChangeLastName] = React.useState('');
     const [firstName, onChangeFirstName] = React.useState('');
     const [inputDate, setInputDate] = React.useState(undefined)
@@ -81,7 +81,10 @@ export default SignUpScreen = () => {
 
             </ScrollView>
             {/* --- Submit button --- */}
-            <TouchableOpacity style={styles.primaryBtn}>
+            <TouchableOpacity
+                style={styles.primaryBtn}
+                onPress={() => navigation.navigate('Students')}
+            >
                 <Text style={styles.primaryTxt}>
                     Valider
                 </Text>
